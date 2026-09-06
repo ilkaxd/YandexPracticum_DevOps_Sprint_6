@@ -1,0 +1,6 @@
+all:
+  children:
+    practicum_servers:
+      hosts:
+        first_server:
+          ansible_host: 89.169.162.12

@@ -1,0 +1,9 @@
+- name: Install and configure Redis
+  hosts: first_server
+  become: true
+
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - role: redis
