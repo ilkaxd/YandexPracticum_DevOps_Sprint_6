@@ -1,0 +1,33 @@
+- name: Install and config Redis on Debian
+  block:
+    - name: Install Redis package
+      apt:
+        name: redis-server
+        state: present
+        update_cache: true
+
+    - name: Create Redis data directory
+      file:
+        path: "{{ redis_dir }}"
+        state: directory
+        owner: redis
+        group: redis
+        mode: "0750"
+
+    - name: Template Redis config
+      template:
+        src: templates/redis.conf.j2
+        dest: /etc/redis/redis.conf
+        owner: redis
+        group: redis
+        mode: "0640"
+      notify:
+        - Enable and start Redis service
+
+    - name: Ensure Redis service is started
+      systemd_service:
+        name: redis-server
+        state: started
+        enabled: true
+
+  when: ansible_facts["os_family"] == "Debian"

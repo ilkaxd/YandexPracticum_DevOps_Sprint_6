@@ -1,0 +1,8 @@
+port {{ redis_port }}
+dir {{ redis_dir }}
+databases {{ redis_databases_count }}
+appendonly {{ redis_appendonly }}
+
+{% if redis_password is not none and redis_password | length > 0 %}
+requirepass {{ redis_password }}
+{% endif %}
